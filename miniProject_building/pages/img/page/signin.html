@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Login - Play with pet</title>
+    </head>
+    <style>
+        html {
+            /*background: url(bg1.jpg) repeat center center fixed;
+            background-size: cover;*/
+            background: #74634F;
+        }
+        body {
+            text-align: center;
+            top: 50%;
+            font-family: monospace;
+            font-size: 20px;
+        }
+        canvas {
+            width: auto;
+            height: auto;
+            
+        }
+        button {
+            text-align: center;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            padding-right: 10px;
+            padding-left: 10px;
+            border-radius: 10px;
+            border-width: 1px;
+            border-color: #D8D3D3;
+            background: #8bd276;
+            font-family: monospace;
+            color: black;
+        }
+        img {
+            padding-top: 50px;
+            width: 20%;
+            height: 20%;
+        }
+        .text {
+            font-family: monospace;
+            font-size: large;
+        }
+        .sign {
+            width: 300px;
+        }
+        div.box {
+            text-align: center;
+            background-color: Silver;
+            opacity: 0.9;
+            border-radius: 20px;   
+        }
+        div {
+            width: 500px;
+            text-align: center;
+            border-radius: 10px;
+            margin: auto;
+        }
+    </style>
+    <body>
+        <form action="file:///home/kukkik/Express/web/pet.html">
+        <div class="box">
+            <br>
+            <div>
+                <font align="center" size="50" style="color:#105170"><h1>LOGIN</h1></font>
+            </div>
+            <div>
+                Username : 
+                <input maxlength="255" class="text" name="username" id="username" placeholder="username" required/>
+            </div>
+            <br>
+            <div>
+                Password  : 
+                <input type="password" class="text" name="password" id="password" placeholder="password" value="" required/>
+            </div>
+            <br>
+            <div>
+                <button type="submit" class="sign" style="background-color:#76C6DE">SIGN IN</button>
+            </div>
+        </form>
+            <br>
+            <div>
+                <p>Don't have an account?</p>
+                <a href= "file:///home/kukkik/Express/web/signup.html"><button type="button" class="sign" style="background-color:#91d1bf">JOIN FOR FREE</button></a>
+                <br><br><br><br>
+            </div>
+        </div>
+        <script type="text/javascript">
+         
+        </script>
+    </body>
+</html>

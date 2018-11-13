@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Sign up - Play with pet</title>
+    </head>
+    <style>
+        html {
+            /*background: url(bg1.jpg) repeat center center fixed;
+            background-size: cover;*/
+            background: #74634F;
+        }
+        body {
+            text-align: center;
+            top: 50%;
+            font-family: monospace;
+        }
+        button {
+            text-align: center;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            padding-right: 10px;
+            padding-left: 10px;
+            border-radius: 10px;
+            border-width: 1px;
+            border-color: #D8D3D3;
+            background: #8bd276;
+            font-family: monospace;
+            color: black;
+        }
+        img {
+            padding-top: 50px;
+            width: 20%;
+            height: 20%;
+        }
+        .text {
+            font-family: monospace;
+            font-size: large;
+        }
+        .sign {
+            width: 300px;
+        }
+        div.box {
+            text-align: center;
+            /*background-color: #A6D8DF;*/
+            background-color: Silver;
+            opacity: 0.9;
+            border-radius: 20px;
+            
+        }
+        div {
+            width:500px;
+            margin: auto;
+        }
+    </style>
+    <body>
+        <div class="box">
+            <br>
+            <div>
+                <font size="50" style="color:#FF5F07"><h3>CREATE ACCOUNT</h3></font>
+            </div>
+            <div>
+                <em style="color:red">*</em>Username : 
+                <input maxlength="255" class="text" name="username" id="username" placeholder="username">
+            </div>
+            <br>
+            <div>
+                <em style="color:red">*</em>Password : 
+                <input type="password" class="text" name="password1" id="password1" placeholder="password" value="" required="">
+            </div>
+            <br>
+            <div>
+                <em style="color:red">*</em>Confirm Password : 
+                <input type="password" class="text" name="password2" id="password2" placeholder="password again" value="" required="">
+            </div>
+            <br>
+            <div>
+                <input type="radio" name="gender" value="male" checked> Male
+                <input type="radio" name="gender" value="female"> Female
+            </div>
+            <br><br>
+            <div>
+               <button type="button" onclick="regis()" class="sign" style="background-color:#FFC039">SIGN UP</button></a>
+            </div>
+            <br><br>
+            <div>
+                <p>Already have an account?</p>
+                 <a href= "http://localhost:8080/signin"><button type="button" class="sign" style="background-color:#ffde86">LOGIN</button></a>
+            </div>
+            <br><br><br>
+        </div>
+        <script type="text/javascript">
+            
+            function regis(){
+                var name = document.getElementById("username").value;
+                var pass1 = document.getElementById("password1").value;
+                var pass2 = document.getElementById("password2").value;
+                if(pass1 = pass2){
+                    console.log("regis");
+                     ajaxPost('/regis?name='+name+"&pass="+pass1, recieve_data);
+                }
+            }
+            
+            function recieve_data(data){
+                var name = document.getElementById("username").value;
+               if(data == "true"){
+                console.log("goto next");
+                console.log(name);
+                window.location.href = "http://localhost:8080/getProfile?table="+name;
+               }
+            }
+            
+            function ajaxPost(path, callFunction){
+		  	xmlhttp = new XMLHttpRequest();
+		  	xmlhttp.onreadystatechange=function(){
+		         if (xmlhttp.readyState==4 && xmlhttp.status==200){
+		         		setTimeout(ajaxGet,100,'/result_regis', callFunction);
+		         	}
+		         };
+		   	xmlhttp.open("POST","http://localhost:8080"+path,true);
+		   	xmlhttp.setRequestHeader("Content-type","appication/json");
+		   	xmlhttp.send(); //request from client to server for get data
+        }
+        function ajaxGet(path,makeFunction){
+		  	xmlhttp = new XMLHttpRequest();
+		   	xmlhttp.onreadystatechange=function(){
+		         if (xmlhttp.readyState==4 && xmlhttp.status==200){
+		         	var data = JSON.parse(this.responseText);
+		         	console.log(data);
+		         	makeFunction(data);
+		         }
+		   	}
+		   	xmlhttp.open("GET","http://localhost:8080"+path, true);
+		   	xmlhttp.send(); //request from client to server for get data
+	   	}
+            
+         
+        </script>
+    </body>
+</html>

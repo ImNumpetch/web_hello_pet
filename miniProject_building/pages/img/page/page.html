@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Profile - Play with pet</title>
+    </head>
+    <style>
+        /*html {
+            background: url(bg1.jpg) repeat center center fixed;
+            background-size: cover;
+        }*/
+        body {
+            /*text-align: center;*/
+            top: 50%;
+            font-family: monospace;
+            background: #f7d8a1; /*#FFF44a*/
+        }
+        img {
+            /*padding-top: 50px;*/
+            width: 300px;
+            height: 300px;
+        }
+        .text {
+            font-family: monospace;
+            font-size: xx-large;
+        }
+        face {
+            /*width:400px;
+            margin: 20px!important;*/
+            text-align: left;
+        }
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 300px;
+            height: 300px;
+            background-color: black;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px 0;
+        
+            /* Position the tooltip */
+            position: absolute;
+            z-index: 1;
+        }
+        
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+        }
+        button {
+            background-color: #74634F;
+            border: none;
+            color: white;
+            padding: 5px 10px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+        .logo {
+            width: 10%;
+            height: 10%;
+        }
+    </style>
+    <body>
+        <div align="right">
+            (Username)
+            <!--<a href= "D:/Year3/t2/Building2/miniproject/web/pet-1.html"><button type="button" class="logout">My Pet</button></a>-->
+            <a href= "file:///home/kukkik/Express/web/home.html"><button type="button" class="logout">Logout</button></a>
+        </div>
+        
+            <center><img src="logo_0.png" alt="logo" class="logo"></center>
+            
+        <div class="face">
+            <table>
+                <tr>
+                    <td></td>
+                    <!--<canvas id="addPet" width="400px" height="400px"></canvas>-->
+                    <td>
+                        <a href= "file:///home/kukkik/Express/web/pet.html"><img src="p-dog.png"></a>
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                        <a href= "file:///home/kukkik/Express/web/create_pet.html"><img src="create-pet.png"></a>
+                    </td>
+                    <!--<span class="tooltiptext"><p>ADD PET</p></span>-->
+                </tr>
+        <div class="tooltip">
+            <span class="tooltiptext"><p>Level:</p><progress value="22" max="100"></progress></span>
+        </div>
+        </div>
+            </table>
+        </div>
+        <script type="text/javascript">
+            var canvas = document.getElementById('addPet');
+            var ctx = canvas.getContext("2d");
+            ctx.fillStyle="#FF0000";
+            ctx.beginPath();
+            ctx.arc(200,200,150,0,2*Math.PI);
+            ctx.stroke();
+            
+            ctx.moveTo(80,200);
+            ctx.lineTo(320,200);
+            ctx.stroke();
+            
+            ctx.moveTo(200,80);
+            ctx.lineTo(200,320);
+            ctx.stroke();
+         
+        </script>
+    </body>
+</html>

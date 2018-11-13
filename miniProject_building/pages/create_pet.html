@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Create Pet - Play With Pet</title>
+    </head>
+    <style>
+        html {
+            /*background: url(bg1.jpg) repeat center center fixed;
+            background-size: cover;*/
+            /*background-color: #5d0e9f;*/
+            background-color: #d46a6e;
+        }
+        body {
+            /*text-align: center;*/
+            /*top: 50%;*/
+            font-family: monospace;
+        }
+        button {
+            text-align: center;
+            padding-top: 20px;
+            padding-bottom: 20px;
+            padding-right: 20px;
+            padding-left: 20px;
+            border-radius: 20px;
+            border-width: 2px;
+            border-color: #F9E798;
+            background: #FFF44B;
+            font-family: monospace;
+            font-size: xx-large;
+            color: black;
+        }
+        .text {
+            font-family: monospace;
+            font-size: 30px;
+            color: #5c4344;
+        }
+        .sign {
+            width: 300px;
+        }
+        .div-center {
+            width:550px;
+            margin: auto;
+        }
+        .select-pet, input[type=name-pet] {
+            font-family: monospace;
+            font-size: xx-large;
+        }
+        #sign {
+            text-align: right;
+            width: auto;
+        }
+        #gif {
+            width: 30%;
+        }
+    </style>
+    <body>
+        <div id="sign">
+            <a href= "http://localhost:8080/getProfile">
+            <img src="x.png" width="50px">
+            </a>
+        </div>        
+        
+        <div class="div-center">
+            <center><font class="text" align="center" size="50"><h2>CREATE PET</h2></font></center>
+            <font class="text">NAME PET : </font>
+            <input type="name-pet" name="name-pet" id="name-pet" placeholder="name pet">
+            <br><br>
+            <font class="text">SELECT PET : </font>
+            <select class="select-pet" id="type">
+            <option value="Dog">Dog</option>
+            <option value="Cat">Cat</option>
+            <option value="Hamster">Hamster</option>
+            </select>
+            <br><br><br>
+            <center><button id="createPet" onclick="createPet()" type="button">LET'S GO !</button></a></center>
+        </div>
+
+        <center><img src="cat-sleep.gif" id="gif"></center>
+        
+        <script type="text/javascript">
+            
+            function createPet(){
+                var name = document.getElementById("name-pet").value;
+                var e = document.getElementById("type");
+               var type = e.options[e.selectedIndex].value;
+                console.log(name+":"+type);
+                ajaxPost('/createPet?name='+name+'&type='+type,recieve_data);
+            }
+            
+            function recieve_data(data){
+               console.log("namePet:"+data);
+               if(data.length>0){
+                window.location.href = "http://localhost:8080/Pet?data="+data;
+               }
+            }
+            
+            function ajaxPost(path, callFunction){
+		  	xmlhttp = new XMLHttpRequest();
+		  	xmlhttp.onreadystatechange=function(){
+		         if (xmlhttp.readyState==4 && xmlhttp.status==200){
+		         		setTimeout(ajaxGet,100,'/namePet', callFunction);
+		         	}
+		         };
+		   	xmlhttp.open("POST","http://localhost:8080"+path,true);
+		   	xmlhttp.setRequestHeader("Content-type","appication/json");
+		   	xmlhttp.send(); //request from client to server for get data
+        }
+        function ajaxGet(path,makeFunction){
+		  	xmlhttp = new XMLHttpRequest();
+		   	xmlhttp.onreadystatechange=function(){
+		         if (xmlhttp.readyState==4 && xmlhttp.status==200){
+		         	var data = JSON.parse(this.responseText);
+		         	console.log(data);
+		         	makeFunction(data);
+		         }
+		   	}
+		   	xmlhttp.open("GET","http://localhost:8080"+path, true);
+		   	xmlhttp.send(); //request from client to server for get data
+	   	}
+            
+         
+        </script>
+    </body>
+</html>

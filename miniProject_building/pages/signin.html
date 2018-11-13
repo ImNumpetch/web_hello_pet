@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Login - Play with pet</title>
+    </head>
+    <style>
+        html {
+            /*background: url(bg1.jpg) repeat center center fixed;
+            background-size: cover;*/
+            background: #74634F;
+        }
+        body {
+            text-align: center;
+            top: 50%;
+            font-family: monospace;
+        }
+        canvas {
+            width: auto;
+            height: auto;
+            
+        }
+        button {
+            text-align: center;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            padding-right: 10px;
+            padding-left: 10px;
+            border-radius: 10px;
+            border-width: 1px;
+            border-color: #D8D3D3;
+            background: #8bd276;
+            font-family: monospace;
+            color: black;
+        }
+        img {
+            padding-top: 50px;
+            width: 20%;
+            height: 20%;
+        }
+        .text {
+            font-family: monospace;
+            font-size: large;
+        }
+        .sign {
+            width: 300px;
+        }
+        div.box {
+            text-align: center;
+            background-color: Silver;
+            opacity: 0.9;
+            border-radius: 20px;   
+        }
+        div {
+            width: 500px;
+            text-align: center;
+            border-radius: 10px;
+            margin: auto;
+        }
+    </style>
+    <body>
+        <div class="box">
+            <br>
+            <div>
+                <font align="center" size="50" style="color:#105170"><h1>LOGIN</h1></font>
+            </div>
+            <div>
+                Username : 
+                <input maxlength="255" class="text" name="username" id="username" placeholder="username">
+            </div>
+            <br>
+            <div>
+                Password  : 
+                <input type="password" class="text" name="password" id="password" placeholder="password" value="" required="">
+            </div>
+            <br>
+            <div>
+                <button type="button" class="sign" onclick="login()" style="background-color:#76C6DE">SIGN IN</button></a>
+            </div>
+            <br><br>
+            <div>
+                <p>Don't have an account?</p>
+                <a href= "http://localhost:8080/signup"><button type="button" class="sign" style="background-color:#91d1bf">JOIN FOR FREE</button></a>
+                <br><br><br><br><br><br><br>
+            </div>
+        </div>
+        <script type="text/javascript">
+            var username ="";
+            var pass = "";
+            
+            function login(){
+                username = document.getElementById("username").value;
+                pass = document.getElementById("password").value;
+                send_data = 'name='+username+"&password="+pass;
+               
+                ajaxPost('/login?'+send_data, recieve_data);
+                console.log("call");
+            }
+            function recieve_data(data){
+               //console.log("data="+data);
+               if(data.length>0){
+                console.log("call pro="+data);
+                window.location.href = "http://localhost:8080/getProfile?table="+data;
+                // ajaxPost('/profile?table='+data);
+                 
+               }
+               else if(data ==""){
+                alert("wrong");
+               }
+            }
+            
+            function ajaxPost(path, callFunction){
+		  	xmlhttp = new XMLHttpRequest();
+		  	xmlhttp.onreadystatechange=function(){
+		         if (xmlhttp.readyState==4 && xmlhttp.status==200){
+		         		setTimeout(ajaxGet,100,'/namepath', callFunction);
+		         	}
+		         };
+		   	xmlhttp.open("POST","http://localhost:8080"+path,true);
+		   	xmlhttp.setRequestHeader("Content-type","appication/json");
+		   	xmlhttp.send(); //request from client to server for get data
+        }
+        function ajaxGet(path,makeFunction){
+		  	xmlhttp = new XMLHttpRequest();
+		   	xmlhttp.onreadystatechange=function(){
+		         if (xmlhttp.readyState==4 && xmlhttp.status==200){
+		         	var data = JSON.parse(this.responseText);
+		         	console.log(data);
+		         	makeFunction(data);
+		         }
+		   	}
+		   	xmlhttp.open("GET","http://localhost:8080"+path, true);
+		   	xmlhttp.send(); //request from client to server for get data
+	   	}
+         
+        </script>
+    </body>
+</html>

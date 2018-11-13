@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Pet - Play with pet</title>
+    </head>
+    <style>
+        /*html {
+            background: url(bg1.jpg) repeat center center fixed;
+            background-size: cover;
+        }*/
+        body {
+            /*text-align: center;*/
+            top: 50%;
+            font-family: monospace;
+            background: #FEAD84; 
+        }
+        canvas {
+            width: auto;
+            height: auto;
+            text-align: center;
+        }
+        #convex {
+            height: 90px;
+            padding: 5px;
+            /*background-color: lightgray;
+            box-shadow: 3px 3px;*/
+        }
+        addPet {
+            text-align: center;
+        }
+        .data-pet {
+            font-family: monospace;
+            font-size: large;
+            text-align: left;
+            color: #f7d8a1;
+        }
+        .logo {
+            /*height: 20%;*/
+            width: 40%;
+        }
+        .divlogo {
+            background-color: #f7d8a1;
+            border-style: solid;
+            border-color: #f7d8a1 #544132 #544132;
+        }
+        .col-50{
+            float: left;
+            height: 400px;
+            width: 50%;
+            background-color: green;
+        }
+        .col-30{
+            float: left;
+            height: 400px;
+            width: 30%;
+        }
+        .col-30-r{
+            float: right;
+            height: 400px;
+            width: 25%;
+        }
+        #feature{
+             /*background-color: red; */
+        }
+        #feed {
+            background-color: #74634F;
+            border-width: 5px;
+            border-style: dotted;
+            border-color: #f7d8a1 #f7d8a1 #74634F;
+            width: 90%;
+            color: #74634F;
+        }
+        #play {
+            background-color: #74634F;
+            border-width: 5px;
+            border-style: dotted;
+            border-color: #74634F #f7d8a1 #f7d8a1;
+            width: 90%;
+            color: #74634F;
+        }
+        .PB_TOP {
+            background-color: #74634F;
+            border: none;
+            color: white;
+            padding: 5px 10px;
+            text-align: right;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+        #pet_data {
+            background-color: #74634F;
+            border-width: 5px;
+            border-style: dotted;
+            border-color: #f7d8a1;
+            width: 90%;
+        }
+        #menu {
+            background-color: #f7d8a1;
+            border-style: solid;
+            border-color: #41382e;
+            color: #74634F;
+            padding: 5px 10px;
+            text-align: right;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+        #menu:hover {background-color: #F8C98D;
+        /*
+        progress {
+            background-color: white;
+        }
+        progress::-webkit-progress-bar {
+           background-color: white;
+        }
+        progress::-webkit-progress-value {
+           background-color: red;
+        } 
+        progress::-moz-progress-bar {
+            background-color: red;
+        }*/
+
+    </style>
+    <body>
+
+        <div id="feature" class="col-30">
+            <img src="logo_0.png" alt="logo" class="logo">
+                <br><br>
+            <div id="feed" onclick="changeImage1()">
+                <br>
+                &nbsp; &nbsp;&nbsp;&nbsp;
+                <img src="feed-2.png" alt="feed" class="feed" id="convex">
+                
+                <br>
+                <div onclick="get_feed()" onmousedown="call_feed(event)">
+                    &nbsp; &nbsp;&nbsp; &nbsp; <button id="menu"><font size="6">FEED</font></button>
+                </div>
+                
+            </div> 
+            <div id="play" onclick="changeImage2()">
+                &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;<img src="play-1.png" alt="play-dog" class="play-dog" id="convex">
+                <br>
+                <div onclick="get_play()" onmousedown="call_play(event)">
+                    &nbsp; &nbsp;&nbsp; &nbsp; <button id="menu"><font size="6">PLAY</font></button>
+                </div>
+                <br><br>
+            </div>
+        </div>
+        
+        <div id="pet_pic" class="col-30">
+             <!--<img src="dog_u.gif" alt="addPet" class="addPet" width="544px" height="544px">-->
+             <img id="img_pet" src="dog_u.gif" width="544px" height="544px">
+        </div>
+        
+        <div id="right_data" class="col-30-r">
+            <div align="right">
+                (Username)
+                <a href= "file:///home/kukkik/Express/web/page.html"><button type="button" class="PB_TOP">My Profile</button></a>
+                <a href= "file:///home/kukkik/Express/web/home.html"><button type="button" class="PB_TOP">Logout</button></a>
+            </div>
+            <br><br><br><br><br><br><br>
+            <div id="pet_data">
+                <br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="data-pet">NAME : (Example)</font>
+                <br><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="data-pet">LEVEL : 1 </font>
+                <br><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="data-pet">EXP : </font><progress value="10" max="100"></progress>
+                <br><br>
+            </div>
+            <br>
+        </div>
+
+        <script type="text/javascript">
+            var keepFeed= 0;
+            function changeImage1() {
+                var image = document.getElementById('img_pet');
+                if (keepFeed==1) {
+                    image.src = "/home/kukkik/Express/web/dog-eat.gif";
+                } else {
+                    image.src = "/home/kukkik/Express/web/dog_u.gif";
+                }
+            }
+            
+            function changeImage2() {
+                var image = document.getElementById('img_pet');
+                if (keepFeed==2) {
+                    image.src = "/home/kukkik/Express/web/dog-play.gif";
+                } else {
+                    image.src = "/home/kukkik/Express/web/dog_u.gif";
+                }
+            }
+            
+            function get_feed(exp){
+                keepFeed = 1;
+                
+                //var exp = exp + 10;
+                //document.getElementById("demo").innerHTML = "increse exp";
+                exp = exp+10;
+                return exp;
+                
+            }
+            
+            function get_play(exp){
+                keepFeed = 2;
+                exp = exp+10;
+                return exp;
+            }
+            
+            function call_feed(e) {
+                var targ;
+                if (!e) {
+                    var e = window.event;
+                }
+                if (e.target) {
+                    targ=e.target;
+                } else if (e.srcElement) {
+                    targ=e.srcElement;
+                }
+                var tname;
+                tname = targ.tagName;
+                //alert("You clicked on a " + tname + " element.");
+                //alert("get feed");
+            }
+            
+            function call_play(e) {
+                var targ;
+                if (!e) {
+                    var e = window.event;
+                }
+                if (e.target) {
+                    targ=e.target;
+                } else if (e.srcElement) {
+                    targ=e.srcElement;
+                }
+                var tname;
+                tname = targ.tagName;
+                //alert("You clicked on a " + tname + " element.");
+                //alert("Let's play!");
+            }
+            
+            console.log('exp1', get_feed(25));
+            console.log('exp2',get_feed(10));
+            console.log( 'keep feed : ', keepFeed);
+            
+        </script>
+    </body>
+</html>

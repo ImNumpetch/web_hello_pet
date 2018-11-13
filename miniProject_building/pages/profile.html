@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Profile - Play with pet</title>
+    </head>
+    <style>
+        /*html {
+            background: url(bg1.jpg) repeat center center fixed;
+            background-size: cover;
+        }*/
+        body {
+            /*text-align: center;*/
+            top: 50%;
+            font-family: monospace;
+            background: #f7d8a1; /*#FFF44a*/
+        }
+        img {
+            /*padding-top: 50px;*/
+            width: 300px;
+            height: 300px;
+        }
+        .text {
+            font-family: monospace;
+            font-size: xx-large;
+        }
+        face {
+            /*width:400px;
+            margin: 20px!important;*/
+            text-align: left;
+        }
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 300px;
+            height: 300px;
+            background-color: black;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px 0;
+        
+            /* Position the tooltip */
+            position: absolute;
+            z-index: 1;
+        }
+        
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+        }
+        button {
+            background-color: #74634F;
+            border: none;
+            color: white;
+            padding: 5px 10px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+        .logo {
+            width: 10%;
+            height: 10%;
+        }
+    </style>
+    <body>
+        <div align="right" >
+           
+            <p id = "username">(Username)</p>
+            <!--<a href= "D:/Year3/t2/Building2/miniproject/web/pet-1.html"><button type="button" class="logout">My Pet</button></a>-->
+            <a href= "http://localhost:8080/"><button type="button" class="logout">Logout</button></a>
+        </div>
+        
+            <center><img src="logo_0.png" alt="logo" class="logo"></center>
+            
+        <div class="face">
+            <table>
+                <tr id="myUL">
+                   <td>
+                    <!--<canvas id="pet" width="300px" height="300px"><img id="pet"></canvas>-->
+                    <img id="imglist">
+                    </td>
+                    <td>
+                        <a href= "http://localhost:8080/create" onclick="newElement()"><img src="create-pet.png"></a>
+                    </td>
+                    
+                    <!--<span class="tooltiptext"><p>ADD PET</p></span>-->
+                </tr>
+        <div class="tooltip">
+            <span class="tooltiptext"><p>Level:</p><progress value="22" max="100"></progress></span>
+        </div>
+        </div>
+            </table>
+        </div>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            var pet_name =   ["","","","",""];
+            var text = "";
+            var user =  "";
+            //var img= ["","","","",""]; 
+             var type =  ["","","","",""];
+            var path = "/mydata";
+            //var img ="";
+            var img = new Array();
+            var but = new Array();
+            ///calll
+            var namepet="";
+                    
+            ajaxGet(path,createTable);
+            console.log("call");
+            function ajaxGet(path,callfunc){
+		  	xmlhttp = new XMLHttpRequest();
+		   	xmlhttp.onreadystatechange=function(){
+		         if (xmlhttp.readyState==4 && xmlhttp.status==200){
+		         	var data = JSON.parse(this.responseText);
+		         	//console.log(data);
+		         	callfunc(data);
+		         }
+		   	}
+		   	xmlhttp.open("GET","http://localhost:8080"+path, true);
+		   	xmlhttp.send(); //request from client to server for get data
+	   	}
+      
+        function createTable(data){
+            
+            console.log("pet!!");
+            console.log(data);
+ 
+           for (var i =0; i < data.length;i++){
+            for (var key in data[i]){
+                if(key=="pet_name"){
+                    pet_name[i] += data[i][key];
+                    console.log("name:"+pet_name[i]);   
+                }
+                else if(key =="type"){
+                   type[i]= data[i][key];
+                    console.log(type[i]);
+                    //check_type_draw(type);
+                    }
+                else if(key =="user"){
+                    user = data[i][key];
+                    console.log("user:"+user);
+                    document.getElementById("username").innerHTML="username : "+user;
+                } 
+            }
+           }
+           check_type_draw(type);
+           
+           }
+        
+           function check_type_draw (type){
+            for(var i=0 ; i< type.length;i++){
+                if(type[i]=="Dog"){
+                        console.log("d");
+                        
+                        img[i] = document.createElement("IMG");
+                        img[i].src = "p-dog.png";
+                        img[i].name = pet_name[i];
+                        img[i].title = pet_name[i];
+                        document.getElementById('imglist').appendChild(img[i]);
+                       
+                         $([].concat.apply([], img)).click(function() {
+                    namepet = (this.name);
+                        text ="http://localhost:8080/Pet?data="+namepet;
+                        window.location.href = text ;
+                    });
+                       
+                        }
+                    else if(type[i]=="Cat"){ 
+                        console.log("c");
+                        
+                        console.log(img[i] );
+                        img[i] = document.createElement("IMG");
+                        img[i].src = "p-cat.png";
+                        document.getElementById('imglist').appendChild(img[i]);
+                        img[i].name = pet_name[i];
+                        img[i].title = pet_name[i];
+                         $([].concat.apply([], img)).click(function() {
+                        namepet = (this.name);
+                        text ="http://localhost:8080/Pet?data="+namepet;
+                        window.location.href = text ;
+                    });
+                        /*img[i].onclick = function() {
+                            console.log(i);
+                            text[i] ="http://localhost:8080/Pet?data="+pet_name[this];
+                           window.location.href = text ;
+                }}*/
+                    }
+                    else if(type[i]=="Hamster"){
+                        console.log("h");
+                         //img="p-hamster.png";
+                        console.log(img[i] );
+                        img[i] = document.createElement("IMG");
+                        img[i].src = "p-hamster.png";
+                        document.getElementById('imglist').appendChild(img[i]);
+                        img[i].name = pet_name[i];
+                        img[i].title = pet_name[i];
+                         $([].concat.apply([], img)).click(function() {
+                        namepet = (this.name);
+                        text ="http://localhost:8080/Pet?data="+namepet;
+                        window.location.href = text ;
+                    });
+                       
+                       /* img[i].onclick = function() {
+                            text[i] ="http://localhost:8080/Pet?data="+pet_name[this];
+                            window.location.href = text ;}
+                        
+                    }*/
+            }
+           }
+           }
+        
+
+        
+        </script>
+    </body>
+</html>

@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Pet - Play with pet</title>
+    </head>
+    <style>
+        /*html {
+            background: url(bg1.jpg) repeat center center fixed;
+            background-size: cover;
+        }*/
+        body {
+            /*text-align: center;*/
+            top: 50%;
+            font-family: monospace;
+            background: #FEAD84; 
+        }
+        canvas {
+            width: auto;
+            height: auto;
+            text-align: center;
+        }
+        #convex {
+            height: 90px;
+            padding: 5px;
+            /*background-color: lightgray;
+            box-shadow: 3px 3px;*/
+        }
+        addPet {
+            text-align: center;
+        }
+        .data-pet {
+            font-family: monospace;
+            font-size: large;
+            text-align: left;
+            color: #f7d8a1;
+        }
+        .logo {
+            /*height: 20%;*/
+            width: 10%;
+        }
+        .div-logo {
+            text-align: left;
+            padding: 10px 100px;
+            background-color: #f7d8a1;
+            border-style: solid;
+            border-color: #74634F;
+    width: 10%;
+        }
+        .col-l{
+            float: left;
+            height: 500px;
+            width: 28%;
+            
+        }
+        .col-cen{
+            float: left;
+            height: 500px;
+            width: 300px;
+        }
+        .col-r{
+            float: right;
+            height: 400px;
+            width: 31%;
+            
+        }
+        #feature{
+             /*background-color: red; */
+        }
+        #feed {
+            background-color: #74634F;
+            border-width: 5px;
+            border-style: dotted;
+            border-color: #f7d8a1 #f7d8a1 #74634F;
+            width: 90%;
+            color: #74634F;
+        }
+        #play {
+            background-color: #74634F;
+            border-width: 5px;
+            border-style: dotted;
+            border-color: #74634F #f7d8a1 #f7d8a1;
+            width: 90%;
+            color: #74634F;
+        }
+        .PB_TOP {
+            background-color: #74634F;
+            border: none;
+            color: white;
+            padding: 5px 10px;
+            text-align: right;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+        #pet_data {
+            background-color: #74634F;
+            border-width: 5px;
+            border-style: dotted;
+            border-color: #f7d8a1;
+            width: 90%;
+        }
+        #menu {
+            background-color: #f7d8a1;
+            border-style: solid;
+            border-color: #41382e;
+            color: #74634F;
+            padding: 5px 10px;
+            text-align: right;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+        /*
+        progress {
+            background-color: white;
+        }
+        progress::-webkit-progress-bar {
+           background-color: white;
+        }
+        progress::-webkit-progress-value {
+           background-color: red;
+        } 
+        progress::-moz-progress-bar {
+            background-color: red;
+        }*/
+
+        .logo{
+            width: 80%;
+        }
+    </style>
+    <body>
+        <div align="right">
+                <p id="user">
+                <!--(Username)-->
+                <button type="button" onclick="gotoProfile()" class="PB_TOP">Profile</button>
+                <a href= "http://localhost:8080/home"><button type="button" class="PB_TOP">Logout</button></a>
+                </p>
+        </div>
+        
+        <div class="div-logo">
+            
+            <img src="logo_0.png" alt="logo" class="logo">
+        </div>
+
+        <div id="feature" class="col-l">
+                
+            <div id="feed">
+                <br>
+                &nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <img src="feed-2.png" alt="feed" class="feed" id="convex">
+                <br>
+                <div onclick="get_feed()">
+                    &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <button id="menu"><font size="6" onmouseover="style.color='green'" onclick="get_feed()" onmouseout="style.color='black'">FEED</font></button>
+                    <!--<p id="demo"></p>-->
+                </div>
+                
+            </div>
+            <div id="play">
+                &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <img src="play-1.png" alt="play-dog" class="play-dog" id="convex">
+                <br>
+                <div onclick="get_play()">
+                    &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <button id="menu"><font size="6" onmouseover="style.color='green'" onclick="get_play()" onmouseout="style.color='black'">PLAY</font></button>
+                </div>
+                <br><br>
+            </div>
+        </div>
+        
+        <div class="col-cen">
+            
+            <!-- <img id="pet_img" width="544" height="544" class="addPet"> -->
+            <img id="pet_img" width="500" height="500" class="addPet" src="hamster_u.gif"> <!-- for test when no db -->
+           
+        </div>
+        
+        <div id="right_data" class="col-r">
+            
+            <br><br><br><br><br><br><br>
+            <div id="pet_data">
+                <br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font id="petname" class="data-pet">NAME : (Example)</font>
+                <br><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font id="petlv" class="data-pet">LEVEL : 1 </font>
+                <br><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font class="data-pet">EXP : </font><progress id="petexp" value="0" max="100"></progress>
+                <br><br>
+            </div>
+            <br><br><br><br>
+            <div id="pet_data">
+                <p class="data-pet" id="petAction">RECENT</p>
+                <p class="data-pet" id="petTime1">(time)</p>
+                <p class="data-pet" id="petTime2">(time)</p>
+                <p class="data-pet" id="petTime3">(time)</p>
+                <p class="data-pet" id="petTime4">(time)</p>
+                <p class="data-pet" id="petTime5">(time)</p>
+            </div>
+            <br>
+        </div>
+        
+        <script type="text/javascript">
+            //alt="addPet"
+            ///edit back to my profile by json name of user and window on load
+           //pet
+            //id="pet_pic" class="col-30"
+            var pet_name =  ["","","","",""];
+            
+            var user =  "";
+            //var img= ["","","","",""]; 
+             var type =  "";
+            var path = "/mydata";
+            //var img ="";
+            var img = ""; 
+            var user="";
+            var exp=0;
+            var type="";
+            var pet_name="";
+            var action = new Array();
+            var time=["","","","","","","","","","","","","",""];
+            /*--------------------------------*/
+            
+            
+            ///calll
+            ajaxGet('/dataPet',recieveData);
+            console.log("call");
+            
+            function gotoProfile(){
+                
+                window.location.href = "http://localhost:8080/getProfile?table="+user;
+            }
+             function get_feed(){
+                //document.getElementById("demo").innerHTML = "eat food";
+                //img.src = "dog-eat.gif";
+                ajaxPost('/feed?user='+user+'&name='+pet_name+'&type='+type,recieveData);
+                console.log("feed");
+                ajaxGet('/dataPet',recieveData);
+                change_gif_feed();
+            }
+            //edit new call back
+            function get_play(){
+               ajaxPost('/play?user='+user+'&name='+pet_name+'&type='+type,recieveData);
+               console.log("play");
+               //img.src = "dog_play.gif";
+               ajaxGet('/dataPet',recieveData);
+               change_gif_play();
+            }
+            function display_img(){
+                console.log("type:"+type);
+                 if(type=="Dog"){
+                             //type = "Dog";
+                     console.log("d");
+                        
+                        img = document.createElement("IMG");
+                        img.src = "dog_u.gif";
+
+                         img.width = "600px";
+                        document.getElementById('pet_img').src=img.src;
+                            }
+                    else if(type=="Cat"){
+                        //type = "Cat";
+                        console.log("c");                       
+                        img= document.createElement("IMG");
+                        img.src = "cat_u.gif";
+                       document.getElementById('pet_img').src=img.src;
+                           }
+                    else if(type=="Hamster"){
+                        //type = "Hamster";
+                        console.log("h");
+                         //img="p-hamster.png";
+                        img= document.createElement("IMG");
+                        img.src = "hamster_u.gif";
+                        document.getElementById('pet_img').src=img.src;
+                        
+                    }
+            }
+            function recieveData(data){
+                
+                exp=0;
+                console.log(data);
+                for (var i =0; i < data.length;i++){
+                     for (var key in data[i]){
+                        if(key=="pet_name"){
+                             pet_name = data[i][key];
+                              var petname = document.getElementById("petname");
+                              petname.innerHTML = "NAME :"+pet_name;
+                        }
+                        else if(key =="user"){
+                            user = data[i][key];
+                            //document.getElementById("username").innerHTML=user;
+                        }
+                        else if(key =="exp"){
+                            exp += parseInt(data[i][key]);
+                            console.log("exp="+exp);
+                            var petlv = document.getElementById("petlv");
+                            var lv = parseInt(exp/100);
+                            petlv.innerHTML = "LV :"+lv;
+                           
+                            //var petexp = document.getElementById("petexp").value;
+                            var expp = parseInt(exp%100);
+                            document.getElementById("petexp").value = expp;
+                            //petexp = expp;
+                            //console.log("exp:"+expp);
+                    //show text
+                    //ajax sun petexp
+                        }
+                        else if(key =="type"){
+                            
+                            type= data[0][key];
+                            console.log(type);
+                           
+                            //console.log("type="+type);
+                    //place img
+                        }
+                        else if(key =="action"){
+                            action[i]= data[i][key];
+                            console.log("action="+action);
+                    //place img
+                        }
+                         else if(key =="time"){
+                            time[i]= data[i][key];
+                            console.log("time="+time);
+                    //place img
+                        } 
+                }
+            }
+            console.log("check profile"+user);
+            display_img();
+            change_recent();
+        }
+        function change_recent(){
+           var i = action.length-1;
+                document.getElementById("petTime1").innerHTML=action[i]+" : "+time[i];
+                document.getElementById("petTime2").innerHTML=action[i-1]+" : "+time[i-1];
+                document.getElementById("petTime3").innerHTML=action[i-2]+" : "+time[i-2];
+                document.getElementById("petTime4").innerHTML=action[i-3]+" : "+time[i-3];
+                document.getElementById("petTime5").innerHTML=action[i-4]+" : "+time[i-4];
+                //var para = document.createElement("P");
+                //var t = document.createTextNode(action[i]+" : "+time[i]);
+                //para.appendChild(t);
+                //document.getElementById("recent").appendChild(para);
+            
+        }
+        function change_gif_feed(){
+            img= document.createElement("IMG");
+            img.src = type+'-eat.gif';
+            document.getElementById('pet_img').src=img.src;
+            setTimeout();
+            setTimeout(function() {
+           
+            }, 5000);
+        }
+        function change_gif_play(){
+            img= document.createElement("IMG");
+            img.src = type+'-play.gif';
+            document.getElementById('pet_img').src=img.src;
+            setTimeout();
+            setTimeout(function() {
+ 
+            }, 5000);
+            
+        }
+            
+            function ajaxGet(path,callfunc){
+		  	xmlhttp = new XMLHttpRequest();
+		   	xmlhttp.onreadystatechange=function(){
+		         if (xmlhttp.readyState==4 && xmlhttp.status==200){
+		         	var data = JSON.parse(this.responseText);
+		         	console.log(data);
+		         	recieveData(data);
+		         }
+		   	}
+		   	xmlhttp.open("GET","http://localhost:8080"+path, true);
+		   	xmlhttp.send(); //request from client to server for get data
+	   	}
+      
+ 
+        function ajaxPost(path, callFunction){
+		  	xmlhttp = new XMLHttpRequest();
+		  	xmlhttp.onreadystatechange=function(){
+		         if (xmlhttp.readyState==4 && xmlhttp.status==200){
+		         		setTimeout(ajaxGet,100,'/dataPet', callFunction);
+		         	}
+		         };
+		   	xmlhttp.open("POST","http://localhost:8080"+path,true);
+		   	xmlhttp.setRequestHeader("Content-type","appication/json");
+		   	xmlhttp.send(); //request from client to server for get data
+        }
+         
+        </script>
+    </body>
+</html>
